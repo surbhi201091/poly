@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="angular-cookies.js"></script>
 	
 	<script type="text/javascript">
-		var app = angular.module('mittens',[]);
+		var app = angular.module('mittens',['ngRoute']);
 
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
@@ -24,9 +24,23 @@ app.config(function($routeProvider, $locationProvider) {
   });
 
 		app.controller('HomeController', function($scope,$http){	
-
+			function getMeows(){
+		$http.get('/meows').then(function(responce){
+				$scope.meows=responce.data;
+			});		
+}
+getMeows();
+$scope.submit=function getMeows() {
+		$http.post('/meows'),{newmeow:$scope.newmeow}.then(function(){
+			getMeows();
+				$scope.newmeow='';
+		});
+		};
 		});
 
+
+		
+		
 app.controller('SignupController', function($scope,$http){
 	
 	console.log('You are on the Signup Page');
